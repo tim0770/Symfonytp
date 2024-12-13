@@ -1,0 +1,26 @@
+security:
+    # Remplacer 'encoders' par 'password_hashers' pour les versions récentes de Symfony
+    password_hashers:
+        App\Entity\User:
+            algorithm: bcrypt
+
+    # Configuration des firewalls
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            form_login:
+                login_path: login
+                check_path: login
+                username_parameter: email
+                password_parameter: password
+            logout:
+                path: app_logout
+            stateless: false  # Permet d'autoriser les utilisateurs non authentifiés
+
+    # Rôles d'accès
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/user, roles: ROLE_USER }
